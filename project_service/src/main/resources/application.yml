@@ -1,0 +1,33 @@
+server:
+  port: 9191
+  error:
+    include-binding-errors: always
+    include-message: always
+
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    url: "jdbc:mysql://${HOST}:3307/${MYSQL_DATABASE}?serverTimezone=UTC"
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+
+
+  application:
+    name: PROJECT-SERVICE
+
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
