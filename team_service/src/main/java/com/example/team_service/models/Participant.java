@@ -8,7 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,13 +27,13 @@ public class Participant {
   private Long member_id;
 
   @ElementCollection
-  private Set<Long> task_id;
+  private Set<Long> taskIds;
 
   private String email;
 
   private String position;
 
-  private Date registered;
+  private LocalDateTime registered;
 
   @ManyToOne
   @JoinColumn(name = "team_id")

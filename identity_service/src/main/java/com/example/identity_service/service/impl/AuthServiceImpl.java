@@ -77,9 +77,7 @@ public class AuthServiceImpl implements AuthService {
 
   @Override
   public boolean existUser(String username) {
-    System.out.println(username+" was");
     Optional<User> existUser = userRepository.findByEmail(username);
-    System.out.println(existUser.isPresent());
     return existUser.isPresent();
   }
 }

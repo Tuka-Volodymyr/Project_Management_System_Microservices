@@ -1,6 +1,6 @@
 package com.example.task_service.model.task;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +17,6 @@ public class TaskResponse {
 
   private String status;
 
-  private Date deadline;
+  private LocalDateTime deadline;
 
 }

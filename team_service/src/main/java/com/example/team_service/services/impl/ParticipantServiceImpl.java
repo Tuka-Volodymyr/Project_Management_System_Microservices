@@ -14,7 +14,7 @@ import com.example.team_service.models.participant.ParticipantTaskRequest;
 import com.example.team_service.repositories.ParticipantRepository;
 import com.example.team_service.services.ParticipantService;
 import com.example.team_service.services.TeamService;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -77,7 +77,7 @@ public class ParticipantServiceImpl implements ParticipantService {
         .team(team)
         .position(participantRequest.getPosition())
         .email(participantRequest.getEmail())
-        .registered(new Date())
+        .registered(LocalDateTime.now())
         .build();
     save(participant);
     return toParticipantResponse(participant, team.getName());
@@ -92,9 +92,9 @@ public class ParticipantServiceImpl implements ParticipantService {
     Participant participant = getParticipantByEmail(participantTaskRequest.getParticipantEmail());
     Set<Long> combinedTaskIdList = Stream.concat(
             participantTaskRequest.getTask_id().stream(),
-            participant.getTask_id().stream())
+            participant.getTaskIds().stream())
         .collect(Collectors.toSet());
-    participant.setTask_id(combinedTaskIdList);
+    participant.setTaskIds(combinedTaskIdList);
     save(participant);
     return "Task(s) was added";
   }
@@ -113,7 +113,7 @@ public class ParticipantServiceImpl implements ParticipantService {
   @Override
   public String deleteTaskForParticipant(DeleteTaskRequest deletedTask) {
     Participant participant = getParticipantByEmail(deletedTask.getParticipantEmail());
-    participant.getTask_id().remove(deletedTask.getTaskId());
+    participant.getTaskIds().remove(deletedTask.getTaskId());
     save(participant);
     return "Task was delete from participant";
   }

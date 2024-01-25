@@ -6,7 +6,7 @@ import com.example.team_service.models.exception.TeamNotFoundException;
 import com.example.team_service.models.team.TeamRequest;
 import com.example.team_service.repositories.TeamRepository;
 import com.example.team_service.services.TeamService;
-import java.util.Date;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +35,7 @@ public class TeamServiceImpl implements TeamService {
   @Override
   public String createTeam(TeamRequest teamRequest) {
     Team team = Team.builder()
-        .registered(new Date())
+        .registered(LocalDateTime.now())
         .name(teamRequest.getName())
         .build();
     save(team);

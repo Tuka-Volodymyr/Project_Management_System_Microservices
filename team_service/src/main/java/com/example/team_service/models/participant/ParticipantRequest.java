@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.NumberFormat;
@@ -11,7 +12,8 @@ import org.springframework.format.annotation.NumberFormat;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ParticipantRequest {
+@Builder
+  public class ParticipantRequest {
 
   @Email
   @NotBlank

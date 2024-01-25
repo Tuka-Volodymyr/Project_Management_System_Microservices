@@ -16,8 +16,10 @@ import org.springframework.stereotype.Service;
 @Service
 @Setter
 public class JwtServiceImpl implements JwtService {
+
   @Value("${SECRET_KEY}")
   private String secretKey;
+
   @Override
   public void validateToken(final String token) {
     Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token);

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class ParticipantTaskRequest {
 
   private List<Long> task_id;

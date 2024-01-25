@@ -4,7 +4,7 @@ import com.example.project_service.model.entity.Project;
 import com.example.project_service.model.project.ChangeStatusRequest;
 import com.example.project_service.model.project.ProjectRequest;
 import com.example.project_service.model.project.ProjectResponse;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public interface ProjectService {
 
@@ -20,5 +20,5 @@ public interface ProjectService {
 
   ProjectResponse getProjectById(Long id);
 
-  Date stringToDate(String deadline);
+  LocalDateTime stringToLocalDateTime(String deadline);
 }

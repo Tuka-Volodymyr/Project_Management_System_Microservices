@@ -11,10 +11,9 @@ import com.example.project_service.service.ProjectService;
 import com.example.project_service.model.project.ProjectRequest;
 import com.example.project_service.model.project.ProjectResponse;
 import com.example.project_service.model.project.Status;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -46,8 +45,8 @@ public class ProjectServiceImpl implements ProjectService {
     Project project = Project.builder()
         .name(projectRequest.getName())
         .description(projectRequest.getDescription())
-        .registered(new Date())
-        .deadline(stringToDate(projectRequest.getDeadline()))
+        .registered(LocalDateTime.now())
+        .deadline(stringToLocalDateTime(projectRequest.getDeadline()))
         .owner(projectRequest.getOwner())
         .status(checkAndReturnStatus(projectRequest.getStatus()))
         .build();
@@ -99,11 +98,11 @@ public class ProjectServiceImpl implements ProjectService {
   }
 
   @Override
-  public Date stringToDate(String deadline) {
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+  public LocalDateTime stringToLocalDateTime(String deadline) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     try {
-      return dateFormat.parse(deadline);
-    } catch (ParseException e) {
+      return LocalDateTime.parse(deadline, formatter);
+    } catch (RuntimeException e) {
       throw new BadRequestException("Wrong date format, must be yyyy-MM-dd HH:mm:ss");
     }
   }

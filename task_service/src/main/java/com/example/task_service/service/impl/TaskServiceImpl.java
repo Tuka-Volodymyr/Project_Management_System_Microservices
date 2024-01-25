@@ -10,10 +10,9 @@ import com.example.task_service.service.TaskService;
 import com.example.task_service.model.task.Status;
 import com.example.task_service.model.task.TaskRequest;
 import com.example.task_service.model.task.TaskResponse;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,8 +46,8 @@ public class TaskServiceImpl implements TaskService {
         .description(taskRequest.getDescription())
         .project_id(taskRequest.getProject_id())
         .status(checkAndReturnStatus(taskRequest.getStatus()))
-        .registered(new Date())
-        .deadline(stringToDate(taskRequest.getDeadline()))
+        .registered(LocalDateTime.now())
+        .deadline(stringToLocalDateTime(taskRequest.getDeadline()))
         .build();
 
     save(task);
@@ -93,19 +92,19 @@ public class TaskServiceImpl implements TaskService {
   }
 
   @Override
-  public Date stringToDate(String deadline) {
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+  public LocalDateTime stringToLocalDateTime(String deadline) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     try {
-      return dateFormat.parse(deadline);
-    } catch (ParseException e) {
+      return LocalDateTime.parse(deadline, formatter);
+    } catch (RuntimeException e) {
       throw new BadRequestException("Wrong date format, must be yyyy-MM-dd HH:mm:ss");
     }
   }
 
+
   @Override
   public boolean existenceTask(long taskId) {
     Optional<Task> task = taskRepository.findById(taskId);
-    System.out.println(taskId);
     return task.isPresent();
   }
 

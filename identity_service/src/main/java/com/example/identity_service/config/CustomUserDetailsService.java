@@ -16,7 +16,7 @@ public class CustomUserDetailsService implements UserDetailsService {
   private UserRepository userRepository;
 
   @Override
-  public UserDetails loadUserByUsername(String username){
+  public UserDetails loadUserByUsername(String username) {
     Optional<User> credential = userRepository.findByEmail(username);
     return credential.map(CustomUserDetails::new).orElseThrow(UserNotFoundException::new);
   }

@@ -33,7 +33,8 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/error/**", "/auth/register", "/auth/authenticate","/auth/exist").permitAll()
+            .requestMatchers("/error/**", "/auth/register", "/auth/authenticate", "/auth/exist")
+            .permitAll()
             .anyRequest().authenticated())
         .httpBasic(Customizer.withDefaults())
         .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(

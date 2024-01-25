@@ -4,7 +4,7 @@ import com.example.task_service.model.entity.Task;
 import com.example.task_service.model.task.ChangeStatusRequest;
 import com.example.task_service.model.task.TaskRequest;
 import com.example.task_service.model.task.TaskResponse;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public interface TaskService {
 
@@ -18,7 +18,7 @@ public interface TaskService {
 
   String checkAndReturnStatus(String statusInString);
 
-  Date stringToDate(String deadline);
+  LocalDateTime stringToLocalDateTime(String deadline);
 
   boolean existenceTask(long taskId);
 
