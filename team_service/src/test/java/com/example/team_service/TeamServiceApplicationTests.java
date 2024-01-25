@@ -1,13 +1,17 @@
 package com.example.team_service;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import com.example.team_service.services.impl.ParticipantServiceImplTest;
+import com.example.team_service.services.impl.TeamServiceImplTest;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-@SpringBootTest
-class TeamServiceApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+    ParticipantServiceImplTest.class,
+    TeamServiceImplTest.class
+})
+public class TeamServiceApplicationTests {
+
 
 }

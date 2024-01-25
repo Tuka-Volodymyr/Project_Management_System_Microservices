@@ -1,13 +1,14 @@
 package com.example.task_service;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import com.example.task_service.service.TaskServiceImplTest;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
-@SpringBootTest
-class TaskServiceApplicationTests {
 
-  @Test
-  void contextLoads() {
-  }
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+    TaskServiceImplTest.class,
+})
+public class TaskServiceApplicationTests {
 
 }

@@ -37,7 +37,7 @@ public final class ProjectServiceImplTest {
   public Project project = Project.builder()
       .id(2L)
       .status("Done")
-      .registered(LocalDateTime.of(2023,1, 14, 10, 30))
+      .registered(LocalDateTime.of(2023, 1, 14, 10, 30))
       .deadline(LocalDateTime.of(2024, 1, 14, 10, 30))
       .description("This project is very difficult")
       .name("System of management")
@@ -92,9 +92,8 @@ public final class ProjectServiceImplTest {
     when(projectRepository.findById(changeStatusRequest.getProjectId())).thenReturn(
         Optional.of(project));
 
-    BadRequestException exception = assertThrows(BadRequestException.class, () -> {
-      projectService.changeProjectStatus(changeStatusRequest);
-    });
+    BadRequestException exception = assertThrows(BadRequestException.class,
+        () -> projectService.changeProjectStatus(changeStatusRequest));
     assertEquals("Status must be IN_WORK or DONE", exception.getMessage());
   }
 
