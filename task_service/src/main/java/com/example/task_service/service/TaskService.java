@@ -16,6 +16,8 @@ public interface TaskService {
 
   String deleteTask(long projectId);
 
+  boolean existenceTasksByProjectId(long projectId);
+
   String checkAndReturnStatus(String statusInString);
 
   LocalDateTime stringToLocalDateTime(String deadline);

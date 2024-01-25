@@ -132,4 +132,12 @@ public class ParticipantServiceImpl implements ParticipantService {
         .findByEmail(email)
         .orElseThrow(ParticipantNotFoundException::new);
   }
+
+  @Override
+  public boolean existsByTaskIdsContains(long taskId){
+    System.out.println(taskId);
+    System.out.println(taskId);
+    System.out.println(taskId);
+    return participantRepository.existsByTaskIdsContains(taskId);
+  }
 }

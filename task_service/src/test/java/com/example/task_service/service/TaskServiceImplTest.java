@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import com.example.task_service.client.ProjectServiceClient;
+import com.example.task_service.client.TeamClient;
 import com.example.task_service.model.entity.Task;
 import com.example.task_service.model.exceptions.BadRequestException;
 import com.example.task_service.model.task.ChangeStatusRequest;
@@ -29,6 +30,9 @@ public class TaskServiceImplTest {
 
   @Mock
   private ProjectServiceClient projectServiceClient;
+
+  @Mock
+  private TeamClient teamClient;
 
   @InjectMocks
   private TaskServiceImpl taskService;
@@ -106,7 +110,7 @@ public class TaskServiceImplTest {
     Task task = Task.builder()
         .name("Garbage collector ")
         .description("Some description")
-        .project_id(2L)
+        .projectId(2L)
         .status("In_Work")
         .registered(LocalDateTime.now())
         .deadline(LocalDateTime.of(2024, 2, 19, 12, 30, 12))
@@ -129,7 +133,7 @@ public class TaskServiceImplTest {
     Task task = Task.builder()
         .name("Garbage collector ")
         .description("Some description")
-        .project_id(2L)
+        .projectId(projectId)
         .status("In_Work")
         .registered(LocalDateTime.now())
         .deadline(LocalDateTime.of(2024, 2, 19, 12, 30, 12))
@@ -138,6 +142,8 @@ public class TaskServiceImplTest {
     when(taskRepository
         .findById(projectId))
         .thenReturn(Optional.of(task));
+
+    when(teamClient.existsByTaskIdsContains(projectId)).thenReturn(false);
 
     String response = taskService.deleteTask(projectId);
 

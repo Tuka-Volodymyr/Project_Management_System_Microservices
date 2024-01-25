@@ -24,7 +24,7 @@ public class Task {
 
   private String description;
 
-  private long project_id;
+  private long projectId;
 
   private String status;
 

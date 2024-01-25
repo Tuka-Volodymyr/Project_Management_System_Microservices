@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import com.example.project_service.client.IdentityClient;
+import com.example.project_service.client.TaskClient;
 import com.example.project_service.model.entity.Project;
 import com.example.project_service.model.exceptions.BadRequestException;
 import com.example.project_service.model.project.ChangeStatusRequest;
@@ -29,6 +30,9 @@ public final class ProjectServiceImplTest {
 
   @Mock
   private ProjectRepository projectRepository;
+
+  @Mock
+  private TaskClient taskClient;
 
   @InjectMocks
   private ProjectServiceImpl projectService;
@@ -99,10 +103,12 @@ public final class ProjectServiceImplTest {
 
   @Test
   public void deleteProjectTest_Success() {
+    long projectId = 2;
 
-    when(projectRepository.findById(2L)).thenReturn(Optional.of(project));
+    when(taskClient.notExistenceTasksByProjectId(projectId)).thenReturn(true);
+    when(projectRepository.findById(projectId)).thenReturn(Optional.of(project));
 
-    String response = projectService.deleteProject(2L);
+    String response = projectService.deleteProject(projectId);
 
     assertEquals(response, project.getName() + " project was deleted");
   }

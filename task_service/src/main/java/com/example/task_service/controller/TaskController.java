@@ -29,7 +29,7 @@ public class TaskController {
   }
 
   @GetMapping("/existence")
-  public ResponseEntity<Boolean> existUser(@RequestParam Long taskId) {
+  public ResponseEntity<Boolean> existTask(@RequestParam Long taskId) {
     return new ResponseEntity<>(taskService.existenceTask(taskId), HttpStatus.OK);
   }
 
@@ -44,4 +44,10 @@ public class TaskController {
   public ResponseEntity<String> deleteTask(@PathVariable("id") Long id) {
     return new ResponseEntity<>(taskService.deleteTask(id), HttpStatus.OK);
   }
+
+  @GetMapping("/existence/by")
+  public ResponseEntity<Boolean> existenceTasksByProjectId(@RequestParam Long projectId) {
+    return new ResponseEntity<>(taskService.existenceTasksByProjectId(projectId), HttpStatus.OK);
+  }
+
 }

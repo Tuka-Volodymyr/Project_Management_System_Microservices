@@ -1,6 +1,7 @@
 package com.example.project_service.service.impl;
 
 import com.example.project_service.client.IdentityClient;
+import com.example.project_service.client.TaskClient;
 import com.example.project_service.model.entity.Project;
 import com.example.project_service.model.exceptions.BadRequestException;
 import com.example.project_service.model.exceptions.ProjectNotFoundException;
@@ -26,6 +27,8 @@ public class ProjectServiceImpl implements ProjectService {
   private final ProjectRepository projectRepository;
 
   private final IdentityClient identityClient;
+
+  private final TaskClient taskClient;
 
   @Override
   public void save(Project project) {
@@ -70,14 +73,12 @@ public class ProjectServiceImpl implements ProjectService {
     Project project = projectRepository
         .findById(projectId)
         .orElseThrow(ProjectNotFoundException::new);
-    try {
-      projectRepository.delete(project);
-    } catch (Exception e) {
-      throw new BadRequestException("First delete all task for this project");
+    if(!taskClient.notExistenceTasksByProjectId(projectId)){
+      throw new BadRequestException("First delete all tasks for this project");
     }
+    projectRepository.delete(project);
     return project.getName() + " project was deleted";
   }
-
 
   @Override
   public String checkAndReturnStatus(String statusInString) {

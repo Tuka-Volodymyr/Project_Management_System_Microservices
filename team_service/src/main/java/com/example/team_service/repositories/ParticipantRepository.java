@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ParticipantRepository extends JpaRepository<Participant,Long> {
+
   Optional<Participant> findByEmail(String email);
 
+  boolean existsByTaskIdsContains(Long taskId);
 }

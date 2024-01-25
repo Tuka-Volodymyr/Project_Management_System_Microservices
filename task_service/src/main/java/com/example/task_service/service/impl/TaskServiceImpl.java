@@ -1,6 +1,7 @@
 package com.example.task_service.service.impl;
 
 import com.example.task_service.client.ProjectServiceClient;
+import com.example.task_service.client.TeamClient;
 import com.example.task_service.model.entity.Task;
 import com.example.task_service.model.exceptions.BadRequestException;
 import com.example.task_service.model.exceptions.TaskNotFoundException;
@@ -25,6 +26,8 @@ public class TaskServiceImpl implements TaskService {
 
   private final ProjectServiceClient projectServiceClient;
 
+  private final TeamClient teamClient;
+
   @Override
   public void save(Task task) {
     if (task != null) {
@@ -44,7 +47,7 @@ public class TaskServiceImpl implements TaskService {
     Task task = Task.builder()
         .name(taskRequest.getName())
         .description(taskRequest.getDescription())
-        .project_id(taskRequest.getProject_id())
+        .projectId(taskRequest.getProject_id())
         .status(checkAndReturnStatus(taskRequest.getStatus()))
         .registered(LocalDateTime.now())
         .deadline(stringToLocalDateTime(taskRequest.getDeadline()))
@@ -68,16 +71,20 @@ public class TaskServiceImpl implements TaskService {
   }
 
   @Override
-  public String deleteTask(long projectId) {
+  public String deleteTask(long taskId) {
     Task task = taskRepository
-        .findById(projectId)
+        .findById(taskId)
         .orElseThrow(TaskNotFoundException::new);
-    try {
-      taskRepository.delete(task);
-    } catch (Exception e) {
+    if (teamClient.existsByTaskIdsContains(taskId)) {
       throw new BadRequestException("First finish task in team.");
     }
+    taskRepository.delete(task);
     return task.getName() + " task was deleted";
+  }
+
+  @Override
+  public boolean existenceTasksByProjectId(long projectId) {
+    return taskRepository.findByProjectId(projectId).isEmpty();
   }
 
   @Override

@@ -29,4 +29,6 @@ public interface ParticipantService {
   String changePosition(ChangePositionRequest changePosition);
 
   Participant getParticipantByEmail(String email);
+
+  boolean existsByTaskIdsContains(long taskId);
 }
